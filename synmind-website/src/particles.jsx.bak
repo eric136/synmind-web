@@ -1,0 +1,33 @@
+import { useEffect, useRef } from "react";
+
+export default function Particles() {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const c = canvasRef.current;
+    const ctx = c.getContext("2d");
+    const fit = () => { c.width = innerWidth; c.height = innerHeight; };
+    fit(); addEventListener("resize", fit);
+
+    const ps = Array.from({ length: 100 }).map(() => ({
+      x: Math.random()*c.width, y: Math.random()*c.height,
+      r: Math.random()*2+1, vx: Math.random()*0.5-0.25, vy: Math.random()*0.5-0.25
+    }));
+
+    const tick = () => {
+      ctx.clearRect(0,0,c.width,c.height);
+      for (const p of ps) {
+        p.x+=p.vx; p.y+=p.vy;
+        if (p.x<0||p.x>c.width) p.vx*=-1;
+        if (p.y<0||p.y>c.height) p.vy*=-1;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle="rgba(124,158,255,0.9)"; ctx.fill();
+      }
+      requestAnimationFrame(tick);
+    };
+    tick();
+    return () => removeEventListener("resize", fit);
+  }, []);
+
+  return <canvas ref={canvasRef} style={{position:"fixed",inset:0,width:"100%",height:"100%",pointerEvents:"none",zIndex:0}}/>;
+}

@@ -1,0 +1,91 @@
+body {
+    background: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 100px;
+    transition: background-color 1s ease;
+}
+
+/* main title */
+#text {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+/* neon glow effect */
+.neon {
+    color: #00ffff;
+    text-shadow:
+        0 0 5px #00ffff,
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 40px #00ffff,
+        0 0 80px #00ffff;
+    animation: neon-pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes neon-pulse {
+    from {
+        text-shadow:
+            0 0 5px #00ffff,
+            0 0 10px #00ffff,
+            0 0 20px #00ffff,
+            0 0 40px #00ffff,
+            0 0 80px #00ffff;
+    }
+    to {
+        text-shadow:
+            0 0 2px #00ffff,
+            0 0 5px #00ffff,
+            0 0 10px #00ffff,
+            0 0 20px #00ffff,
+            0 0 40px #00ffff;
+    }
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 8px;
+}
+
+#controls {
+    margin-bottom: 20px;
+}
+
+#messageBox {
+    margin-top: 10px;
+}
+
+#pickerBox {
+    margin-top: 20px;
+}
+
+#messageInput {
+    padding: 8px 12px;
+    font-size: 16px;
+    width: 260px;
+    max-width: 80%;
+    border-radius: 6px;
+    border: none;
+    margin-right: 8px;
+}
+
+#colorPicker {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+/* fade in / out */
+.hidden {
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.visible {
+    opacity: 1;
+}
