@@ -3,19 +3,55 @@ body {
     color: white;
     font-family: Arial, sans-serif;
     text-align: center;
-    margin-top: 100px;
+    margin-top: 110px; /* space for navbar */
     transition: background-color 1s ease;
 }
 
-/* main title */
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    border-bottom: 1px solid #222;
+    z-index: 1000;
+}
+
+.nav-title {
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #00ffff;
+}
+
+.nav-links a {
+    margin-left: 16px;
+    text-decoration: none;
+    color: #cccccc;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: #00ffff;
+}
+
+/* main title on home page */
 #text {
     font-size: 48px;
     margin-bottom: 20px;
 }
 
-/* neon glow effect */
+/* neon glow effect (used on all pages) */
 .neon {
     color: #00ffff;
+    font-size: 42px;
     text-shadow:
         0 0 5px #00ffff,
         0 0 10px #00ffff,
@@ -42,6 +78,12 @@ body {
             0 0 20px #00ffff,
             0 0 40px #00ffff;
     }
+}
+
+.subtitle {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #cccccc;
 }
 
 button {
@@ -78,6 +120,30 @@ button {
 #colorPicker {
     margin-left: 8px;
     margin-right: 8px;
+}
+
+/* gallery layout on page 3 */
+.gallery {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+}
+
+.gallery img {
+    width: 220px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery img:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.7);
 }
 
 /* fade in / out */
