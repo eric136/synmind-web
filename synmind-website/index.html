@@ -9,11 +9,13 @@
 <body>
 
     <header class="navbar">
-        <div class="nav-title">Eric Web</div>
+        <div class="nav-title">💻 Eric Web</div>
         <nav class="nav-links">
             <a href="index.html">Home</a>
             <a href="page2.html">Page 2</a>
             <a href="page3.html">Gallery</a>
+            <a href="page4.html">About</a>
+            <a href="page5.html">Game</a>
         </nav>
     </header>
 
@@ -36,6 +38,23 @@
         <button id="applyColorBtn">Apply Color</button>
     </div>
 
+    <button id="backToTop" class="back-to-top">Back to Top</button>
+
     <script src="script.js"></script>
+    <script>
+        const backBtn = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 200) {
+                backBtn.classList.add("visible");
+            } else {
+                backBtn.classList.remove("visible");
+            }
+        });
+
+        backBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
 </body>
 </html>

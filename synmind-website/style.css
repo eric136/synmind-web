@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background: black;
     color: white;
@@ -122,7 +126,7 @@ button {
     margin-right: 8px;
 }
 
-/* gallery layout on page 3 */
+/* GALLERY (Page 3) */
 .gallery {
     margin-top: 30px;
     display: flex;
@@ -138,15 +142,41 @@ button {
     border-radius: 12px;
     border: 2px solid #ffffff;
     box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        opacity 0.3s ease;
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+    animation: gallery-fade-in 0.9s ease forwards;
 }
 
+/* staggered animation timing */
+.gallery img:nth-child(1) { animation-delay: 0.1s; }
+.gallery img:nth-child(2) { animation-delay: 0.2s; }
+.gallery img:nth-child(3) { animation-delay: 0.3s; }
+.gallery img:nth-child(4) { animation-delay: 0.4s; }
+.gallery img:nth-child(5) { animation-delay: 0.5s; }
+.gallery img:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes gallery-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.94);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* hover effect on images */
 .gallery img:hover {
     transform: scale(1.06);
     box-shadow: 0 0 18px rgba(0, 255, 255, 0.7);
 }
 
-/* fade in / out */
+/* fade in / out for homepage text */
 .hidden {
     opacity: 0;
     transition: opacity 1.5s ease;
@@ -154,4 +184,130 @@ button {
 
 .visible {
     opacity: 1;
+}
+
+/* GAME (Page 5) */
+.game-wrapper {
+    margin-top: 20px;
+}
+
+.game-info {
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+.game-info span {
+    font-weight: bold;
+    color: #00ffff;
+}
+
+.game-area {
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 90vw;
+    max-width: 500px;
+    height: 260px;
+    border-radius: 16px;
+    border: 2px solid #00ffff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.5);
+    background: radial-gradient(circle at center, #111 0%, #000 60%);
+}
+
+.target {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ff4081;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(255, 64, 129, 0.8);
+    transition: transform 0.1s ease;
+}
+
+.target:active {
+    transform: scale(0.9);
+}
+
+.btn-small {
+    font-size: 14px;
+    padding: 8px 16px;
+    margin-top: 10px;
+}
+
+/* GAME OVER text */
+.game-over-text {
+    margin-top: 16px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #ff4081;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    text-shadow: 0 0 8px rgba(255, 64, 129, 0.8);
+}
+
+.game-over-text.visible {
+    opacity: 1;
+    animation: game-over-blink 0.9s ease-in-out infinite;
+}
+
+@keyframes game-over-blink {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+}
+
+/* shake animation for game area */
+.game-area.shake {
+    animation: shake 0.4s ease;
+}
+
+@keyframes shake {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-6px, 4px); }
+    50% { transform: translate(6px, -4px); }
+    75% { transform: translate(-4px, -3px); }
+    100% { transform: translate(0, 0); }
+}
+
+/* flash animation for target */
+.target.flash {
+    animation: flash 0.5s ease-in-out;
+}
+
+@keyframes flash {
+    0% { box-shadow: 0 0 4px rgba(255, 64, 129, 0.5); }
+    50% { box-shadow: 0 0 16px rgba(255, 255, 255, 1); }
+    100% { box-shadow: 0 0 4px rgba(255, 64, 129, 0.5); }
+}
+
+/* BACK TO TOP BUTTON */
+.back-to-top {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    padding: 10px 18px;
+    font-size: 14px;
+    border-radius: 999px;
+    border: none;
+    background: #00ffff;
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 2000;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
 }

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-title">💻 Eric Web</div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="page2.html">Page 2</a>
+            <a href="page3.html">Gallery</a>
+            <a href="page4.html">About</a>
+            <a href="page5.html">Game</a>
+        </nav>
+    </header>
+
+    <h1 class="neon">Click The Circle!</h1>
+
+    <p class="subtitle">
+        Click the pink circle as many times as you can before time runs out.
+    </p>
+
+    <div class="game-wrapper">
+        <div class="game-info">
+            Score: <span id="score">0</span> |
+            Time left: <span id="time">20</span>s
+        </div>
+
+        <div class="game-info" style="margin-bottom: 10px;">
+            Difficulty: <span id="difficultyLabel">Medium</span>
+        </div>
+
+        <div>
+            <button class="btn-small" id="easyBtn">Easy</button>
+            <button class="btn-small" id="mediumBtn">Medium</button>
+            <button class="btn-small" id="hardBtn">Hard</button>
+            <button class="btn-small" id="ultraBtn">Ultra Hard</button>
+        </div>
+
+        <div class="game-area" id="gameArea">
+            <div class="target" id="target"></div>
+        </div>
+
+        <button class="btn-small" id="startBtn">Start Game</button>
+
+        <p id="gameOverText" class="game-over-text">GAME OVER</p>
+    </div>
+
+    <script>
+        const target = document.getElementById("target");
+        const gameArea = document.getElementById("gameArea");
+        const scoreEl = document.getElementById("score");
+        const timeEl = document.getElementById("time");
+        const startBtn = document.getElementById("startBtn");
+        const difficultyLabel = document.getElementById("difficultyLabel");
+        const gameOverText = document.getElementById("gameOverText");
+
+        const easyBtn = document.getElementById("easyBtn");
+        const mediumBtn = document.getElementById("mediumBtn");
+        const hardBtn = document.getElementById("hardBtn");
+        const ultraBtn = document.getElementById("ultraBtn");
+
+        let score = 0;
+        let timeLeft = 20;
+        let gameRunning = false;
+        let timerId = null;
+        let moveId = null;
+
+        // difficulty speed (ms) - smaller = faster
+        let moveSpeed = 700; // default Medium
+
+        function moveTarget() {
+            const areaRect = gameArea.getBoundingClientRect();
+            const size = 40; // target size
+            const maxX = areaRect.width - size;
+            const maxY = areaRect.height - size;
+
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+
+            target.style.left = x + "px";
+            target.style.top = y + "px";
+        }
+
+        function startGame() {
+            if (gameRunning) return;
+
+            score = 0;
+            timeLeft = 20;
+            scoreEl.textContent = score;
+            timeEl.textContent = timeLeft;
+            gameRunning = true;
+            startBtn.textContent = "Playing...";
+
+            // reset visuals
+            gameOverText.classList.remove("visible");
+            gameArea.classList.remove("shake");
+            target.classList.remove("flash");
+
+            moveTarget();
+
+            // move circle based on difficulty
+            moveId = setInterval(moveTarget, moveSpeed);
+
+            timerId = setInterval(() => {
+                timeLeft--;
+                timeEl.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        function endGame() {
+            gameRunning = false;
+            startBtn.textContent = "Play Again";
+            clearInterval(timerId);
+            clearInterval(moveId);
+
+            // show GAME OVER text with score
+            gameOverText.textContent = "GAME OVER – Score: " + score;
+            gameOverText.classList.add("visible");
+
+            // shake screen + flash target
+            gameArea.classList.add("shake");
+            target.classList.add("flash");
+
+            // remove shake/flash after animation finishes
+            setTimeout(() => {
+                gameArea.classList.remove("shake");
+                target.classList.remove("flash");
+            }, 500);
+        }
+
+        target.addEventListener("click", () => {
+            if (!gameRunning) return;
+            score++;
+            scoreEl.textContent = score;
+            moveTarget();
+        });
+
+        startBtn.addEventListener("click", startGame);
+
+        // ====== Difficulty controls ======
+        function setDifficulty(label, speed) {
+            moveSpeed = speed;
+            difficultyLabel.textContent = label;
+
+            // if game is running, update interval speed
+            if (gameRunning) {
+                clearInterval(moveId);
+                moveId = setInterval(moveTarget, moveSpeed);
+            }
+        }
+
+        easyBtn.addEventListener("click", () => setDifficulty("Easy", 900));
+        mediumBtn.addEventListener("click", () => setDifficulty("Medium", 700));
+        hardBtn.addEventListener("click", () => setDifficulty("Hard", 400));
+        ultraBtn.addEventListener("click", () => setDifficulty("Ultra Hard", 200));
+    </script>
+
+    <button id="backToTop" class="back-to-top">Back to Top</button>
+
+    <script>
+        const backBtn = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 200) {
+                backBtn.classList.add("visible");
+            } else {
+                backBtn.classList.remove("visible");
+            }
+        });
+
+        backBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
+</body>
+</html>
